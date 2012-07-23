@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Main.cpp" />
+    <ClCompile Include="ActiveRecordBase.cpp">
+      <Filter>ActiveRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="ActiveRecordManager.cpp">
+      <Filter>ActiveRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="Account.cpp" />
+    <ClCompile Include="ActiveRecordField.cpp">
+      <Filter>ActiveRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="DefaultDbType.cpp">
+      <Filter>ActiveRecord</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp" />
+    <ClCompile Include="Player.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ActiveRecordManager.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveRecordBase.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="Account.h" />
+    <ClInclude Include="ActiveRecordField.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="DbTypes.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="DefaultDbType.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveRecordTable.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveRecordITable.h">
+      <Filter>ActiveRecord</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="ActiveRecordSetDynamicValueHelper.h">
+      <Filter>ActiveRecord\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveRecordSetIdHelper.h">
+      <Filter>ActiveRecord\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveRecordUseHelper.h">
+      <Filter>ActiveRecord\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="DbExpr.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+    <ClInclude Include="DbExprPtr.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+    <ClInclude Include="DbConstantExpr.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+    <ClInclude Include="DbFieldExpr.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+    <ClInclude Include="DbBinaryExpr.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+    <ClInclude Include="ActiveRecordExprUseHelper.h">
+      <Filter>ActiveRecord\Helper</Filter>
+    </ClInclude>
+    <ClInclude Include="DbUnaryExpr.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+    <ClInclude Include="DbOrderBy.h">
+      <Filter>ActiveRecord\WhereExpr</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ActiveRecord">
+      <UniqueIdentifier>{1bf2b1d9-c444-4927-a0e4-ead053abc97b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ActiveRecord\Helper">
+      <UniqueIdentifier>{78eff5e6-b8b9-49e6-96bc-bd500e035417}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ActiveRecord\WhereExpr">
+      <UniqueIdentifier>{f97c9483-486c-4c10-a1ac-6fe5d6da98c8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
