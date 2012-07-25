@@ -24,8 +24,7 @@ public:
 										template<typename T>
 	void								AddTable();
 
-	string								GetInstallScript() const;
-	void								InstallTables();
+	void								UpdateTableSchemas();
 
 private:
 	SessionPool *						mSessionPool;

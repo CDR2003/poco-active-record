@@ -15,6 +15,7 @@ public:
 
 public:
 	unsigned int						Id;
+	unsigned short						Region;
 	string								Username;
 	string								Password;
 };

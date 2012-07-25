@@ -24,10 +24,14 @@ public:
 	const DbType *						GetType() const								{ return mType; }
 	unsigned int						GetIndex() const							{ return mIndex; }
 	void								SetIndex( unsigned int index )				{ mIndex = index; }
-	bool								IsNullable() const							{ return mIsNullable; }
-	void								SetNullable( bool isNullable )				{ mIsNullable = isNullable; }
+	bool								IsNotNull() const							{ return mIsNotNull; }
+	void								SetNotNull( bool isNotNull )				{ mIsNotNull = isNotNull; }
+	bool								IsUnique() const							{ return mIsUnique; }
+	void								SetUnique( bool isUnique )					{ mIsUnique = isUnique; }
 	bool								IsAutoIncrement() const						{ return mIsAutoIncrement; }
 	void								SetAutoIncrement( bool isAutoIncrement )	{ mIsAutoIncrement = isAutoIncrement; }
+
+	string								ToSql() const;
 
 	void								Use( const void * obj, Statement & statement ) const;
 	void								SetValue( void * obj, const DynamicAny & value ) const;
@@ -40,7 +44,8 @@ private:
 	void *								mDataOffset;
 	const DbType *						mType;
 	unsigned int						mIndex;
-	bool								mIsNullable;
+	bool								mIsNotNull;
+	bool								mIsUnique;
 	bool								mIsAutoIncrement;
 	ActiveRecordUse						mUseHelper;
 	ActiveRecordSetDynamicValue			mSetDynamicValueHelper;
@@ -53,7 +58,8 @@ ActiveRecordField::ActiveRecordField( TField (T::*field), const DbType * type )
 	: mName( "" )
 	, mType( type )
 	, mIndex( 0 )
-	, mIsNullable( false )
+	, mIsNotNull( true )
+	, mIsUnique( false )
 	, mIsAutoIncrement( false )
 {
 	mDataOffset = *reinterpret_cast<void**>( &field );

@@ -20,6 +20,19 @@ int main()
 	ActiveRecordManager::GetInstance()->AddTable<Account>();
 	ActiveRecordManager::GetInstance()->AddTable<Player>();
 
+	Session session = ActiveRecordManager::GetInstance()->CreateSession();
+
+	cout << "Updating database schemas..." << endl;
+	try
+	{
+		ActiveRecordManager::GetInstance()->UpdateTableSchemas();
+	}
+	catch( const Exception & e )
+	{
+		cout << e.displayText() << endl;
+	}
+	cout << "Update completed." << endl;
+
 	Account account;
 	account.Username = "shixin";
 	account.Password = "jiaban";
@@ -27,7 +40,7 @@ int main()
 	account.Save();
 
 	vector<AccountPtr> result;
-	Account::FindAll( DbField( &Account::Id ) >= 20 && DbField( &Account::Id ) < 25, result, DbOrderBy<Account>( &Account::Username ), 2 );
+	Account::FindAll( result, DbField( &Account::Id ) >= 20 && DbField( &Account::Id ) < 25, DbOrderBy<Account>( &Account::Username ), 2 );
 
 	for( vector<AccountPtr>::const_iterator it = result.begin(); it != result.end(); ++it )
 	{

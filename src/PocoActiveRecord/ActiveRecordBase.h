@@ -20,7 +20,8 @@ public:
 	{
 		HasOne,
 		HasMany,
-		BelongsTo
+		BelongsToOne,
+		BelongsToMany
 	};
 
 	typedef AutoPtr<T>					TPtr;
@@ -35,8 +36,8 @@ public:
 
 	static AutoPtr<T>					FindOne( DbExprPtr<T> & exprPtr );
 
-	static void							FindAll( DbExprPtr<T> & exprPtr, vector<TPtr> & result, DbOrderBy<T> order = DbOrderBy<T>(), UInt32 limit = INT_MAX );
-	static void							FindAll( DbExprPtr<T> & exprPtr, list<TPtr> & result, DbOrderBy<T> order = DbOrderBy<T>(), UInt32 limit = INT_MAX );
+	static void							FindAll( vector<TPtr> & result, DbExprPtr<T> & exprPtr, DbOrderBy<T> order = DbOrderBy<T>(), UInt32 limit = INT_MAX );
+	static void							FindAll( list<TPtr> & result, DbExprPtr<T> & exprPtr, DbOrderBy<T> order = DbOrderBy<T>(), UInt32 limit = INT_MAX );
 
 										template<typename TPrimaryKey>
 	static void							Destroy( const TPrimaryKey & primaryKey );
@@ -46,9 +47,9 @@ public:
 
 protected:
 										template<typename TField>
-	static void							AddField( const string & fieldName, TField (T::*field), bool isNullable = false, bool isAutoIncrement = false );
+	static void							AddField( const string & fieldName, TField (T::*field), bool isNotNull = true, bool isUnique = false, bool isAutoIncrement = false );
 										template<typename TField>
-	static void							AddField( const string & fieldName, TField (T::*field), const DbType * type, bool isNullable = false, bool isAutoIncrement = false );
+	static void							AddField( const string & fieldName, TField (T::*field), const DbType * type, bool isNotNull = true, bool isUnique = false, bool isAutoIncrement = false );
 										template<typename TField>
 	static void							SetPrimaryKey( TField (T::*field) );
 
@@ -130,7 +131,7 @@ AutoPtr<T> ActiveRecordBase<T>::FindOne( DbExprPtr<T> & exprPtr )
 
 
 template<typename T>
-void ActiveRecordBase<T>::FindAll( DbExprPtr<T> & exprPtr, vector<TPtr> & result, DbOrderBy<T> order, UInt32 limit )
+void ActiveRecordBase<T>::FindAll( vector<TPtr> & result, DbExprPtr<T> & exprPtr, DbOrderBy<T> order, UInt32 limit )
 {
 	RecordSet recordSet = FindAll( exprPtr, order, limit );
 	result.clear();
@@ -157,7 +158,7 @@ void ActiveRecordBase<T>::FindAll( DbExprPtr<T> & exprPtr, vector<TPtr> & result
 
 
 template<typename T>
-void ActiveRecordBase<T>::FindAll( DbExprPtr<T> & exprPtr, list<TPtr> & result, DbOrderBy<T> order, UInt32 limit )
+void ActiveRecordBase<T>::FindAll( list<TPtr> & result, DbExprPtr<T> & exprPtr, DbOrderBy<T> order, UInt32 limit )
 {
 	RecordSet recordSet = FindAll( exprPtr, order, limit );
 	result.clear();
@@ -245,19 +246,20 @@ void ActiveRecordBase<T>::Destroy()
 
 template<typename T>
 template<typename TField>
-void ActiveRecordBase<T>::AddField( const string & fieldName, TField (T::*field), bool isNullable, bool isAutoIncrement )
+void ActiveRecordBase<T>::AddField( const string & fieldName, TField (T::*field), bool isNotNull, bool isUnique, bool isAutoIncrement )
 {
-	AddField( fieldName, field, DefaultDbType<TField>::GetType(), isNullable, isAutoIncrement );
+	AddField( fieldName, field, DefaultDbType<TField>::GetType(), isNotNull, isUnique, isAutoIncrement );
 }
 
 
 template<typename T>
 template<typename TField>
-void ActiveRecordBase<T>::AddField( const string & fieldName, TField (T::*field), const DbType * type, bool isNullable, bool isAutoIncrement )
+void ActiveRecordBase<T>::AddField( const string & fieldName, TField (T::*field), const DbType * type, bool isNotNull, bool isUnique, bool isAutoIncrement )
 {
 	ActiveRecordField * fieldInfo = new ActiveRecordField( field, type );
 	fieldInfo->SetName( fieldName );
-	fieldInfo->SetNullable( isNullable );
+	fieldInfo->SetNotNull( isNotNull );
+	fieldInfo->SetUnique( isUnique );
 	fieldInfo->SetAutoIncrement( isAutoIncrement );
 	ActiveRecordTable<T>::Fields.push_back( fieldInfo );
 }

@@ -1,4 +1,5 @@
 #include "ActiveRecordManager.h"
+#include "Poco/Data/RecordSet.h"
 #include "Poco/Data/MySQL/Connector.h"
 
 using namespace Poco::Data;
@@ -40,21 +41,7 @@ Session ActiveRecordManager::CreateSession() const
 }
 
 
-string ActiveRecordManager::GetInstallScript() const
-{
-	string installScript = "";
-	list<ActiveRecordITable*>::const_iterator it;
-	for( it = mTables.begin(); it != mTables.end(); ++it )
-	{
-		ActiveRecordITable * table = *it;
-		installScript += table->GetCreateTableScript() + "\n\n";
-	}
-
-	return installScript;
-}
-
-
-void ActiveRecordManager::InstallTables()
+void ActiveRecordManager::UpdateTableSchemas()
 {
 	Session session = this->CreateSession();
 
@@ -62,7 +49,13 @@ void ActiveRecordManager::InstallTables()
 	for( it = mTables.begin(); it != mTables.end(); ++it )
 	{
 		ActiveRecordITable * table = *it;
-		string script = table->GetCreateTableScript();
-		session << script, now;
+		if( table->IsTableCreated( session ) )
+		{
+			table->UpdateTable( session );
+		}
+		else
+		{
+			table->CreateTable( session );
+		}
 	}
 }

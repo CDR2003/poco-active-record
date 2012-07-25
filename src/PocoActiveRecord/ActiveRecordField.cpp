@@ -7,13 +7,24 @@ ActiveRecordField::~ActiveRecordField()
 }
 
 
+string ActiveRecordField::ToSql() const
+{
+	string sql = mName + " " + mType->ToString();
+	sql += ( mIsNotNull ? " NOT NULL" : "" );
+	sql += ( mIsUnique ? " UNIQUE" : "" );
+	sql += ( mIsAutoIncrement ? " AUTO_INCREMENT" : "" );
+	return sql;
+}
+
+
 ActiveRecordField & ActiveRecordField::operator=( const ActiveRecordField & that )
 {
 	mName = that.mName;
 	mDataOffset = that.mDataOffset;
 	mType = that.mType;
 	mIndex = that.mIndex;
-	mIsNullable = that.mIsNullable;
+	mIsNotNull = that.mIsNotNull;
+	mIsUnique = that.mIsUnique;
 	mIsAutoIncrement = that.mIsAutoIncrement;
 	return *this;
 }
