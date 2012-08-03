@@ -16,11 +16,9 @@ using namespace Poco::Data;
 int main()
 {
 	cout << "Connecting to database..." << endl;
-	ActiveRecordManager::GetInstance()->Initialize( "host=localhost;user=root;password=PRC11225;db=test_ar" );
+	ActiveRecordManager::GetInstance()->Initialize( "host=localhost;user=root;password=123456;db=test_ar" );
 	ActiveRecordManager::GetInstance()->AddTable<Account>();
 	ActiveRecordManager::GetInstance()->AddTable<Player>();
-
-	Session session = ActiveRecordManager::GetInstance()->CreateSession();
 
 	cout << "Updating database schemas..." << endl;
 	try
